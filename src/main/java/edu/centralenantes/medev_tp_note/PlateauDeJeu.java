@@ -76,7 +76,7 @@ public class PlateauDeJeu {
     }
 
     /**
-     * Affiche le plateau dans la console.
+     * L'affichage du plateau dans la console.
      */
     public void afficher() {
         for (int i = 0; i < hauteur; i++) {
