@@ -13,7 +13,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>17</maven.compiler.release>
+        <maven.compiler.release>24</maven.compiler.release>
     </properties>
 
     <dependencies>
@@ -58,6 +58,13 @@
                         </manifest>
                     </archive>
                 </configuration>
+            </plugin>
+
+            <!-- Plugin SonarCloud pour l'analyse du code -->
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>4.4.0.3600</version>
             </plugin>
 
         </plugins>
