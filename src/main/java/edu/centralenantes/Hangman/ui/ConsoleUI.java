@@ -26,6 +26,10 @@ public class ConsoleUI {
     private final GameEngine engine;
     private HangmanDrawer drawer;
     
+    /**
+     *
+     * @param engine
+     */
     public ConsoleUI(GameEngine engine) {
         this.scanner = new Scanner(System.in);
         this.engine = engine;
@@ -92,6 +96,9 @@ public class ConsoleUI {
     
     /**
      * Affiche le résultat d'une proposition.
+     * @param letter
+     * @param isCorrect
+     * @param wasAlreadyProposed
      */
     public void displayGuessResult(char letter, boolean isCorrect, boolean wasAlreadyProposed) {
         if (wasAlreadyProposed) {
@@ -128,6 +135,7 @@ public class ConsoleUI {
     
     /**
      * Demande au joueur s'il veut rejouer.
+     * @return
      */
     public boolean askPlayAgain() {
         System.out.print("\nVoulez-vous rejouer ? (o/n) : ");
@@ -137,6 +145,7 @@ public class ConsoleUI {
     
     /**
      * Demande au joueur un mot secret (mode 2 joueurs).
+     * @return
      */
     public String askForSecretWord() {
         while (true) {
@@ -165,6 +174,7 @@ public class ConsoleUI {
     
     /**
      * Demande le nombre maximal d'erreurs.
+     * @return
      */
     public int askForMaxErrors() {
         while (true) {
@@ -190,6 +200,7 @@ public class ConsoleUI {
     
     /**
      * Initialise le drawer avec le nombre d'erreurs.
+     * @param maxErrors
      */
     public void initDrawer(int maxErrors) {
         this.drawer = new HangmanDrawer(maxErrors);

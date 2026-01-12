@@ -5,14 +5,9 @@
 package edu.centralenantes.Hangman.ui;
 
 /**
- *
- * @author dodi
- */
-
-/**
  * Gère l'affichage ASCII du pendu.
  * 
- * @author MEDEV 2026
+ * @author Safae Bouzidi
  * @version 1.0
  */
 public class HangmanDrawer {
@@ -21,7 +16,7 @@ public class HangmanDrawer {
     
     /**
      * Constructeur avec un nombre d'étapes paramétrable.
-     * 
+     * @author MEDEV
      * @param maxErrors nombre maximal d'erreurs (généralement 6 ou 7)
      */
     public HangmanDrawer(int maxErrors) {
@@ -30,6 +25,8 @@ public class HangmanDrawer {
     
     /**
      * Génère les étapes du dessin en fonction du nombre d'erreurs.
+     * @param maxErrors
+     * @return 
      */
     private String[] generateStages(int maxErrors) {
         if (maxErrors == 6) {

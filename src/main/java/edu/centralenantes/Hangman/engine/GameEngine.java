@@ -31,7 +31,7 @@ public class GameEngine {
      * Propose une lettre.
      * 
      * @param letter la lettre à proposer
-     * @return true si la lettre est dans le mot, false sinon
+     * @return true si la lettre est dans le word, false sinon
      * @throws IllegalArgumentException si la lettre est invalide
      * @throws IllegalStateException si aucune partie n'est en cours
      */
@@ -57,6 +57,7 @@ public class GameEngine {
     
     /**
      * Retourne l'état actuel du jeu.
+     * @return
      */
     public GameState getCurrentState() {
         return currentState;
@@ -64,6 +65,7 @@ public class GameEngine {
     
     /**
      * Vérifie si la partie est terminée.
+     * @return
      */
     public boolean isGameOver() {
         return currentState != null && 
@@ -72,6 +74,7 @@ public class GameEngine {
     
     /**
      * Vérifie si le joueur a gagné.
+     * @return
      */
     public boolean hasWon() {
         return currentState != null && 
@@ -80,6 +83,7 @@ public class GameEngine {
     
     /**
      * Vérifie si le joueur a perdu.
+     * @return
      */
     public boolean hasLost() {
         return currentState != null && 

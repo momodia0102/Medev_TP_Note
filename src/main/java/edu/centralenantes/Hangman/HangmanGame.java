@@ -15,13 +15,16 @@ import java.util.Scanner;
 /**
  * Classe principale du jeu du pendu.
  * 
- * @author MEDEV 2026
+ * @author Mohamadou Dia
  * @version 1.0
  */
 public class HangmanGame {
     
     private static final String DEFAULT_DICTIONARY = "dictionnaire.txt";
     
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
         GameEngine engine = new GameEngine();
         ConsoleUI ui = new ConsoleUI(engine);
@@ -73,6 +76,8 @@ public class HangmanGame {
     
     /**
      * Demande au joueur de choisir le mode de jeu.
+     * @param scanner
+     * @return 
      */
     private static int chooseGameMode(Scanner scanner) {
         while (true) {
@@ -95,6 +100,8 @@ public class HangmanGame {
     
     /**
      * Charge un mot depuis le dictionnaire.
+     * @return
+     * @throws IOException 
      */
     private static String loadWordFromDictionary() throws IOException {
         Dictionary dictionary = new Dictionary();
@@ -113,6 +120,8 @@ public class HangmanGame {
     
     /**
      * Boucle principale du jeu.
+     * @param engine
+     * @param ui 
      */
     private static void playGame(GameEngine engine, ConsoleUI ui) {
         while (!engine.isGameOver()) {
