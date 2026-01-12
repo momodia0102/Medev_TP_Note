@@ -4,10 +4,20 @@
  */
 package edu.centralenantes.Hangman;
 
+import edu.centralenantes.Hangman.data.Dictionary;
+import edu.centralenantes.Hangman.engine.GameEngine;
+import edu.centralenantes.Hangman.model.GameState;
+import edu.centralenantes.Hangman.ui.ConsoleUI;
+import java.io.IOException;
+import java.util.Scanner;
+
 /**
- *
- * @author Mohamed
+ * Classe principale du jeu du pendu.
+ * 
+ * @author MEDEV 2026
+ * @version 1.0
  */
 public class HangmanGame {
+    
     
 }
