@@ -76,6 +76,8 @@ public class Dictionary {
     
     /**
      * Vérifie si un mot est valide (uniquement des lettres).
+     * @param word
+     * @return
      */
     private boolean isValidWord(String word) {
         if (word == null || word.isEmpty()) {
@@ -101,6 +103,7 @@ public class Dictionary {
     
     /**
      * Retourne le nombre de mots valides dans le dictionnaire.
+     * @return
      */
     public int getWordCount() {
         return validWords.size();
@@ -108,6 +111,7 @@ public class Dictionary {
     
     /**
      * Vérifie si le dictionnaire est vide.
+     * @return
      */
     public boolean isEmpty() {
         return validWords.isEmpty();
