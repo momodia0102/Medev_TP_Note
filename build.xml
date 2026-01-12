@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Medev_TP_Note" default="compile" basedir=".">
+    
+    <!-- Propriétés du projet -->
+    <property name="src.dir" location="src/main/java"/>
+    <property name="test.src.dir" location="src/test/java"/>
+    <property name="build.dir" location="build"/>
+    <property name="classes.dir" location="${build.dir}/classes"/>
+    <property name="test.classes.dir" location="${build.dir}/test-classes"/>
+    <property name="dist.dir" location="dist"/>
+    <property name="lib.dir" location="lib"/>
+    <property name="doc.dir" location="docs"/>
+    
+    <!-- Classpath du projet -->
+    <path id="project.classpath">
+        <fileset dir="${lib.dir}" includes="*.jar" erroronmissingdir="false"/>
+        <pathelement location="${classes.dir}"/>
+    </path>
+    
+    <!-- Classpath pour les tests (inclut JUnit 5) -->
+    <path id="test.classpath">
+        <path refid="project.classpath"/>
+        <pathelement location="${test.classes.dir}"/>
+        <fileset dir="${lib.dir}" includes="*.jar" erroronmissingdir="false"/>
+    </path>
+    
+    <!-- Nettoyage des fichiers générés -->
+    <target name="clean" description="Supprime les fichiers de build">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+        <delete dir="${doc.dir}"/>
+        <echo message="Nettoyage terminé"/>
+    </target>
+    
+    <!-- Initialisation : création des répertoires nécessaires -->
+    <target name="init" description="Initialise les répertoires de build">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${classes.dir}"/>
+        <mkdir dir="${test.classes.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+        <mkdir dir="${lib.dir}"/>
+        <echo message="Répertoires initialisés"/>
+    </target>
+    
+    <!-- Compilation du code source -->
+    <target name="compile" depends="init" description="Compile le code source">
+        <echo message="Compilation du code source..."/>
+        <javac srcdir="${src.dir}" 
+               destdir="${classes.dir}" 
+               includeAntRuntime="false" 
+               encoding="UTF-8"
+               source="17"
+               target="17">
+            <classpath refid="project.classpath"/>
+        </javac>
+        <echo message="Compilation terminée"/>
+    </target>
+    
+    <!-- Compilation des tests -->
+    <target name="compile-tests" depends="compile" description="Compile les tests">
+        <echo message="Compilation des tests..."/>
+        <javac srcdir="${test.src.dir}" 
+               destdir="${test.classes.dir}" 
+               includeAntRuntime="false" 
+               encoding="UTF-8"
+               source="17"
+               target="17">
+            <classpath refid="test.classpath"/>
+        </javac>
+        <echo message="Compilation des tests terminée"/>
+    </target>
+    
+    <!-- Exécution des tests unitaires (JUnit 5) -->
+    <target name="test" depends="compile-tests" description="Exécute les tests unitaires">
+        <echo message="Lancement des tests unitaires..."/>
+        <junitlauncher haltOnFailure="true" printSummary="true">
+            <classpath refid="test.classpath"/>
+            <testclasses outputdir="${build.dir}">
+                <fileset dir="${test.classes.dir}" includes="**/*Test.class"/>
+                <listener type="legacy-plain"/>
+            </testclasses>
+        </junitlauncher>
+        <echo message="Tests terminés avec succès"/>
+    </target>
+    
+    <!-- Création du JAR exécutable -->
+    <target name="jar" depends="compile" description="Crée le fichier JAR">
+        <echo message="Création du JAR..."/>
+        
+        <!-- Conversion du classpath pour le manifest -->
+        <pathconvert property="manifest.classpath" pathsep=" ">
+            <path>
+                <fileset dir="${lib.dir}" includes="*.jar" erroronmissingdir="false"/>
+            </path>
+            <mapper>
+                <chainedmapper>
+                    <flattenmapper/>
+                    <globmapper from="*" to="lib/*"/>
+                </chainedmapper>
+            </mapper>
+        </pathconvert>
+        
+        <!-- Création du JAR -->
+        <jar destfile="${dist.dir}/Medev_TP_Note.jar" basedir="${classes.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="edu.centralenantes.medev_tp_note.Medev_TP_Note"/>
+                <attribute name="Class-Path" value="${manifest.classpath}"/>
+                <attribute name="Implementation-Version" value="1.0"/>
+                <attribute name="Built-By" value="${user.name}"/>
+            </manifest>
+        </jar>
+        
+        <!-- Copie des bibliothèques -->
+        <mkdir dir="${dist.dir}/lib"/>
+        <copy todir="${dist.dir}/lib" failonerror="false">
+            <fileset dir="${lib.dir}"/>
+        </copy>
+        
+        <echo message="JAR créé: ${dist.dir}/Medev_TP_Note.jar"/>
+    </target>
+    
+    <!-- Génération de la Javadoc -->
+    <target name="javadoc" depends="compile" description="Génère la documentation Javadoc">
+        <echo message="Génération de la Javadoc..."/>
+        <mkdir dir="${doc.dir}"/>
+        <javadoc sourcepath="${src.dir}"
+                 destdir="${doc.dir}"
+                 packagenames="edu.centralenantes.medev_tp_note.*"
+                 encoding="UTF-8"
+                 charset="UTF-8"
+                 docencoding="UTF-8"
+                 windowtitle="Medev TP Note - Documentation"
+                 author="true"
+                 version="true"
+                 use="true">
+            <classpath refid="project.classpath"/>
+        </javadoc>
+        <echo message="Javadoc générée dans ${doc.dir}"/>
+    </target>
+    
+    <!-- Exécution de l'application -->
+    <target name="run" depends="jar" description="Exécute l'application">
+        <echo message="Exécution de l'application..."/>
+        <java jar="${dist.dir}/Medev_TP_Note.jar" fork="true"/>
+    </target>
+    
+    <!-- Build complet (nettoyage + tests + JAR + doc) -->
+    <target name="all" depends="clean, test, jar, javadoc" description="Build complet du projet">
+        <echo message="Build complet terminé avec succès!"/>
+    </target>
+    
+    <!-- Affichage de l'aide -->
+    <target name="help" description="Affiche l'aide">
+        <echo message="Targets disponibles:"/>
+        <echo message="  clean        - Nettoie les fichiers générés"/>
+        <echo message="  compile      - Compile le code source"/>
+        <echo message="  test         - Compile et exécute les tests"/>
+        <echo message="  jar          - Crée le fichier JAR"/>
+        <echo message="  javadoc      - Génère la documentation"/>
+        <echo message="  run          - Exécute l'application"/>
+        <echo message="  all          - Build complet (clean + test + jar + javadoc)"/>
+    </target>
+    
+</project>

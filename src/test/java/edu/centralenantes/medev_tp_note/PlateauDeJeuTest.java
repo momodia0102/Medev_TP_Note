@@ -4,6 +4,7 @@
  */
 package edu.centralenantes.medev_tp_note;
 
+import edu.centralenantes.Hangman.PlateauDeJeu;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
